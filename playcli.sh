@@ -20,8 +20,8 @@ COLORTERM=truecolor
 FILE=$1
 START_OFFSET=$([ $# -gt 1 ]  && echo -n $2 || echo -n 0)
 SPEED=$([ $# -gt 2 ]  && echo -n $3 || echo -n 1)
-DURATION=`ffprobe -v quiet -show_format $FILE | grep duration | tr "=" " " | awk '{print $2}'`
-# FRAME_RATE=`ffprobe -v quiet -select_streams v -show_entries stream=r_frame_rate $FILE | grep r_frame_rate | tr "=" " " | awk '{print $2}'`
+DURATION=`ffprobe -v quiet -show_format "$FILE" | grep duration | tr "=" " " | awk '{print $2}'`
+# FRAME_RATE=`ffprobe -v quiet -select_streams v -show_entries stream=r_frame_rate "$FILE" | grep r_frame_rate | tr "=" " " | awk '{print $2}'`
 # FRAME_RATE_NEW=`echo "scale=3; $SPEED * $FRAME_RATE" | bc`
 TIME_START=`date +%s.%N`
 TIME_START=`echo "scale=3; $TIME_START - $START_OFFSET / $SPEED" | bc`
