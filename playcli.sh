@@ -29,12 +29,14 @@ TIME_NOW=$TIME_START
 TIME_OFFSET=0
 WIDTH=`stty size|awk '{print $2}'`
 HEIGHT=`stty size|awk '{print $1}'`
+HEIGHT=$[$HEIGHT - 2]
 
 while [ `echo "scale=3; $DURATION >= $TIME_OFFSET" | bc` -eq 1 ]
 do
 	TIME_NOW=`date +%s.%N`
 	TIME_OFFSET=`echo "scale=3; ($TIME_NOW - $TIME_START) * $SPEED" | bc`
 	ffmpeg -v quiet -ss `printf "%.3f" $TIME_OFFSET` -i "$FILE" -f apng -an -c:v apng -frames 1 - | jp2a --color --fill --chars="  " --size=$WIDTH"x"$HEIGHT -
+	echo $TIME_OFFSET"s / "$DURATION"s"
 done
 
 echo 'Play done.'
