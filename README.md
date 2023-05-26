@@ -28,4 +28,7 @@ playcli.sh 1.mkv
 playcli.sh 1.mkv 114
 playcli.sh 1.mkv 514 10
 ```
+
 ![Example](res/playcli.jpg "playcli")
+
+![Example](res/demo.gif "demo")
