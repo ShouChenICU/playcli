@@ -16,7 +16,7 @@ then
 fi
 
 echo 'Playing...'
-COLORTERM=truecolor
+export COLORTERM=truecolor
 FILE=$1
 START_OFFSET=$([ $# -gt 1 ]  && echo -n $2 || echo -n 0)
 SPEED=$([ $# -gt 2 ]  && echo -n $3 || echo -n 1)
@@ -33,10 +33,10 @@ HEIGHT=$[$HEIGHT - 2]
 
 while [ `echo "scale=3; $DURATION >= $TIME_OFFSET" | bc` -eq 1 ]
 do
-	TIME_NOW=`date +%s.%N`
-	TIME_OFFSET=`echo "scale=3; ($TIME_NOW - $TIME_START) * $SPEED" | bc`
 	ffmpeg -v quiet -ss `printf "%.3f" $TIME_OFFSET` -i "$FILE" -f apng -an -c:v apng -frames 1 - | jp2a --color --fill --chars="  " --size=$WIDTH"x"$HEIGHT -
 	echo $TIME_OFFSET"s / "$DURATION"s"
+	TIME_NOW=`date +%s.%N`
+	TIME_OFFSET=`echo "scale=3; ($TIME_NOW - $TIME_START) * $SPEED" | bc`
 done
 
 echo 'Play done.'
