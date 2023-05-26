@@ -62,7 +62,7 @@ echo 'Playing...'
 while [ `echo "scale=3; $DURATION >= $TIME_OFFSET" | bc` -eq 1 ]
 do
     fun_render
-    clear
+    echo -e "\033[0;0H"
     echo "$FRAME_BUFFER"
     fun_print_timeline
     fun_calc_time_offset
