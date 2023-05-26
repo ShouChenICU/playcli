@@ -1,10 +1,10 @@
 # playcli
 
-Play vedio on your cli
+Play vedio on your shell
 
 ## Description
 
-It will automatically get the current window size and play with adaptive frame rate on your cli, and you can also set the start offset and playback speed.
+It will automatically get the current window size and play with adaptive frame rate on your shell, and you can also set the start offset and playback speed.
 
 ## Dependents
 

@@ -49,7 +49,7 @@ fun_print_timeline() {
     do
         local right="$right-"
     done
-    echo -en "$TIMELINE [\033[32m$left\033[35m%\033[0m$right]"
+    echo -en "$TIMELINE [\033[32m$left\033[35m#\033[0m$right]"
 }
 
 fun_calc_time_offset() {
