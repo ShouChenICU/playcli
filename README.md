@@ -13,7 +13,7 @@ It will automatically get the current window size and play with adaptive frame r
 
 You can run this command to install it on your debian-like system
 
-`sudo apt install jp2a ffmpeg`
+`sudo apt install ffmpeg jp2a`
 
 ## Usage
 
@@ -29,6 +29,8 @@ playcli.sh 1.mkv 114
 playcli.sh 1.mkv 514 10
 ```
 
-![Example](res/playcli.jpg "playcli")
+![Example](res/playcli1.png "playcli1")
+
+![Example](res/playcli2.png "playcli2")
 
 ![Example](res/demo.gif "demo")

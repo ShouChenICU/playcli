@@ -3,16 +3,16 @@ echo 'Author: ShouChen' >&2
 echo '' >&2
 if [ $# -eq 0 ];
 then
-	echo 'Invalid args!' >&2
-	echo '' >&2
-	echo 'Usage:' >&2
-	echo 'playcli.sh <your vedio> [offset_seconds [speed]]' >&2
-	echo ''
-	echo 'Example: playcli.sh 1.mkv'
-	echo 'Example: playcli.sh 1.mkv 114'
-	echo 'Example: playcli.sh 1.mkv 514 10'
-	echo '' >&2
-	exit -1
+    echo 'Invalid args!' >&2
+    echo '' >&2
+    echo 'Usage:' >&2
+    echo 'playcli.sh <your vedio> [offset_seconds [speed]]' >&2
+    echo ''
+    echo 'Example: playcli.sh 1.mkv'
+    echo 'Example: playcli.sh 1.mkv 114'
+    echo 'Example: playcli.sh 1.mkv 514 10'
+    echo '' >&2
+    exit -1
 fi
 
 export COLORTERM=truecolor
@@ -34,35 +34,71 @@ fun_render() {
     FRAME_BUFFER=`ffmpeg -v quiet -ss $TIME_OFFSET -i "$FILE" -f apng -an -c:v apng -frames 1 - | jp2a --color --fill --chars="  " --size=$WIDTH"x"$HEIGHT -`
 }
 
-fun_print_timeline() {
-    TIMELINE=`echo "\033[36m$TIME_OFFSET\033[0ms / \033[33m$DURATION\033[0ms"`
-    local len=$[${#TIMELINE} - 30]
-    local str_len=`echo "scale=0;($WIDTH - $len - 4) * $TIME_OFFSET / $DURATION" | bc`
-    local left=''
-    for((i=0; i < str_len; i++))
-    do
-        local left="$left="
-    done
-    local str_len=$[$WIDTH - $len - 5 - ${#left}]
-    local right=''
-    for((i=0; i < str_len; i++))
-    do
-        local right="$right-"
-    done
-    echo -en "$TIMELINE [\033[32m$left\033[35m#\033[0m$right]"
-}
-
 fun_calc_time_offset() {
     TIME_NOW=`date +%s.%N`
     TIME_OFFSET=`echo "scale=3; ($TIME_NOW - $TIME_START) * $SPEED" | bc`
     TIME_OFFSET=`printf '%.3f' $TIME_OFFSET`
 }
 
+if [ "$TIMELINE_STYLE" = 'trans' ];
+then
+    # trans style
+    fun_print_timeline() {
+        TIMELINE=`echo "\033[36m$TIME_OFFSET\033[0ms / \033[33m$DURATION\033[0ms"`
+        local len=$[${#TIMELINE} - 30]
+        local str_len=`echo "scale=0;($WIDTH - $len - 4) * $TIME_OFFSET / $DURATION" | bc`
+        local left=''
+        local left_ts=''
+        for((i=0; i < str_len; i++))
+        do
+            case `echo "$i % 3" | bc` in
+                0)
+                    local ch='\033[38;5;45m='
+                    ;;
+                1)
+                    local ch='\033[38;5;218m='
+                    ;;
+                2)
+                    local ch='\033[38;5;231m='
+                    ;;
+            esac
+            local left_ts="$left_ts$ch"
+            local left="$left="
+        done
+        local str_len=$[$WIDTH - $len - 5 - ${#left}]
+        local right=''
+        for((i=0; i < str_len; i++))
+        do
+            local right="$right-"
+        done
+        echo -en "$TIMELINE [$left_ts\033[32m@\033[0m$right]"
+    }
+else
+    # clasic style
+    fun_print_timeline() {
+        TIMELINE=`echo "\033[36m$TIME_OFFSET\033[0ms / \033[33m$DURATION\033[0ms"`
+        local len=$[${#TIMELINE} - 30]
+        local str_len=`echo "scale=0;($WIDTH - $len - 4) * $TIME_OFFSET / $DURATION" | bc`
+        local left=''
+        for((i=0; i < str_len; i++))
+        do
+            local left="$left="
+        done
+        local str_len=$[$WIDTH - $len - 5 - ${#left}]
+        local right=''
+        for((i=0; i < str_len; i++))
+        do
+            local right="$right-"
+        done
+        echo -en "$TIMELINE [\033[32m$left\033[32m@\033[0m$right]"
+    }
+fi
+
 echo 'Playing...'
 while [ `echo "scale=3; $DURATION >= $TIME_OFFSET" | bc` -eq 1 ]
 do
     fun_render
-    echo -e "\033[0;0H"
+    echo -en "\033[0;0H"
     echo "$FRAME_BUFFER"
     fun_print_timeline
     fun_calc_time_offset
