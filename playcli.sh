@@ -51,7 +51,7 @@ then
         local left_ts=''
         for((i=0; i < str_len; i++))
         do
-            case `echo "$i % 3" | bc` in
+            case `echo "$i % 6" | bc` in
                 0)
                     local ch='\033[38;5;45m='
                     ;;
@@ -59,6 +59,15 @@ then
                     local ch='\033[38;5;218m='
                     ;;
                 2)
+                    local ch='\033[38;5;231m='
+                    ;;
+                3)
+                    local ch='\033[38;5;218m='
+                    ;;
+                4)
+                    local ch='\033[38;5;45m='
+                    ;;
+                5)
                     local ch='\033[38;5;231m='
                     ;;
             esac
