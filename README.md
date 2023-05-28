@@ -15,6 +15,8 @@ It will automatically get the current window size and play with adaptive frame r
 - Only need one console
 - Window size updated in real time
 - Adaptive frame rate
+- Play offset control
+- Playback speed control
 - Beautiful timeline
 - Audio support
 
