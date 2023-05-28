@@ -1,15 +1,27 @@
 # playcli
 
-Play vedio on your shell
+![playcli](https://img.shields.io/badge/playcli-v0.13-5bc2e7?style=for-the-badge "playcli v0.13")
+![FFmpeg](https://img.shields.io/badge/-FFmpeg-ff69b4?style=for-the-badge "FFmpeg")
+![jp2a](https://img.shields.io/badge/-jp2a-success?style=for-the-badge "jp2a")
+
+Play vedio on your console
 
 ## Description
 
-It will automatically get the current window size and play with adaptive frame rate on your shell, and you can also set the start offset and playback speed.
+It will automatically get the current window size and play with adaptive frame rate on your console, and you can also set the start offset and playback speed.
 
-## Dependents
+## Fetures
 
-- ffmpeg
-- jp2a
+- Only need one console
+- Window size updated in real time
+- Adaptive frame rate
+- Beautiful timeline
+- Audio support
+
+## Requirements
+
+- [ffmpeg](https://github.com/FFmpeg/FFmpeg)
+- [jp2a](https://github.com/Talinx/jp2a)
 
 You can run this command to install it on your debian-like system
 
@@ -17,8 +29,14 @@ You can run this command to install it on your debian-like system
 
 ## Usage
 
-```BASH
+```SHELL
 playcli.sh <your vedio> [offset_seconds [speed]]
+```
+
+Mute
+
+```SHELL
+AUDIO_ENABLE=0 playcli.sh <your vedio> [offset_seconds [speed]]
 ```
 
 ## Examples
@@ -29,8 +47,8 @@ playcli.sh 1.mkv 114
 playcli.sh 1.mkv 514 10
 ```
 
-![Example](res/playcli1.png "playcli1")
+![Pic1](res/playcli1.png "playcli1")
 
-![Example](res/playcli2.png "playcli2")
+![Pic2](res/playcli2.png "playcli2")
 
-![Example](res/demo.gif "demo")
+![Gif](res/demo.gif "demo")
